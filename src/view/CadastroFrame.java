@@ -6,6 +6,7 @@ package view;
 
 import controller.ControllerCadastro;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -18,6 +19,14 @@ public class CadastroFrame extends javax.swing.JFrame {
     public CadastroFrame() {
         initComponents();
         c = new ControllerCadastro(this);
+    }
+
+    public JTextField getTxt_login_cadastro() {
+        return txt_login_cadastro;
+    }
+
+    public void setTxt_login_cadastro(JTextField txt_login_cadastro) {
+        this.txt_login_cadastro = txt_login_cadastro;
     }
 
     public JButton getBt_cadastrar() {
@@ -44,13 +53,7 @@ public class CadastroFrame extends javax.swing.JFrame {
         this.txt_senha_cadastro = txt_senha_cadastro;
     }
 
-    public JTextField getTxt_usuario_cadastro() {
-        return txt_usuario_cadastro;
-    }
-
-    public void setTxt_usuario_cadastro(JTextField txt_usuario_cadastro) {
-        this.txt_usuario_cadastro = txt_usuario_cadastro;
-    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -62,7 +65,7 @@ public class CadastroFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         txt_nome_cadastro = new javax.swing.JTextField();
-        txt_usuario_cadastro = new javax.swing.JTextField();
+        txt_login_cadastro = new javax.swing.JTextField();
         txt_senha_cadastro = new javax.swing.JTextField();
         bt_cadastrar = new javax.swing.JButton();
 
@@ -70,16 +73,16 @@ public class CadastroFrame extends javax.swing.JFrame {
 
         txt_nome_cadastro.setText("Digite seu nome");
 
-        txt_usuario_cadastro.setText("Digite seu usuario");
+        txt_login_cadastro.setText("Digite seu login");
 
         txt_senha_cadastro.setText("Digite sua senha");
-        txt_senha_cadastro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_senha_cadastroActionPerformed(evt);
-            }
-        });
 
         bt_cadastrar.setText("CADASTRAR");
+        bt_cadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_cadastrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -90,7 +93,7 @@ public class CadastroFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bt_cadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_senha_cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_usuario_cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_login_cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_nome_cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(142, Short.MAX_VALUE))
         );
@@ -100,7 +103,7 @@ public class CadastroFrame extends javax.swing.JFrame {
                 .addGap(71, 71, 71)
                 .addComponent(txt_nome_cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txt_usuario_cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_login_cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(txt_senha_cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
@@ -111,9 +114,13 @@ public class CadastroFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_senha_cadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_senha_cadastroActionPerformed
-        c.salvarAluno();
-    }//GEN-LAST:event_txt_senha_cadastroActionPerformed
+    private void bt_cadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_cadastrarActionPerformed
+        try{
+            c.cadastrarUsuario();
+        }catch(IllegalArgumentException ex){
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }     
+    }//GEN-LAST:event_bt_cadastrarActionPerformed
 
 //    /**
 //     * @param args the command line arguments
@@ -152,8 +159,8 @@ public class CadastroFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_cadastrar;
+    private javax.swing.JTextField txt_login_cadastro;
     private javax.swing.JTextField txt_nome_cadastro;
     private javax.swing.JTextField txt_senha_cadastro;
-    private javax.swing.JTextField txt_usuario_cadastro;
     // End of variables declaration//GEN-END:variables
 }

@@ -28,7 +28,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="bt_cadastrar" min="-2" pref="176" max="-2" attributes="0"/>
                   <Component id="txt_senha_cadastro" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
-                  <Component id="txt_usuario_cadastro" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
+                  <Component id="txt_login_cadastro" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
                   <Component id="txt_nome_cadastro" alignment="0" min="-2" pref="176" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="142" max="32767" attributes="0"/>
@@ -41,7 +41,7 @@
               <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
               <Component id="txt_nome_cadastro" min="-2" pref="32" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="txt_usuario_cadastro" min="-2" pref="32" max="-2" attributes="0"/>
+              <Component id="txt_login_cadastro" min="-2" pref="32" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="txt_senha_cadastro" min="-2" pref="32" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
@@ -57,23 +57,23 @@
         <Property name="text" type="java.lang.String" value="Digite seu nome"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txt_usuario_cadastro">
+    <Component class="javax.swing.JTextField" name="txt_login_cadastro">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Digite seu usuario"/>
+        <Property name="text" type="java.lang.String" value="Digite seu login"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txt_senha_cadastro">
       <Properties>
         <Property name="text" type="java.lang.String" value="Digite sua senha"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txt_senha_cadastroActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="bt_cadastrar">
       <Properties>
         <Property name="text" type="java.lang.String" value="CADASTRAR"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bt_cadastrarActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
