@@ -6,6 +6,7 @@ package DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Usuario;
 
@@ -28,5 +29,15 @@ public class UsuarioDAO {
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.execute();
         conn.close();
+    }
+    
+    public ResultSet consultar(Usuario usuario) throws SQLException{
+        String sql = "select * from usuarios where login = ? and senha = ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setString(1, usuario.getLogin());
+        statement.setString(2, usuario.getSenha());
+        statement.execute();
+        ResultSet resultado = statement.getResultSet();
+        return resultado;
     }
 }
