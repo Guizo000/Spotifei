@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import model.Usuario;
 import view.LoginFrame;
+import view.PrincipalFrame;
 
 /**
  *
@@ -33,7 +34,10 @@ public class ControllerLogin {
             ResultSet res = dao.consultar(usuario);
             if(res.next()){
                 JOptionPane.showMessageDialog(view, "Login efetuado!", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                PrincipalFrame pf = new PrincipalFrame();
+                pf.setVisible(true);
                 view.setVisible(false);
+                
             }else{
                 JOptionPane.showMessageDialog(view,  "Login NÃO efetuado!", "Erro", JOptionPane.ERROR_MESSAGE);
             }
