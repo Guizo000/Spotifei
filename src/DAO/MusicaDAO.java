@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import model.Musica;
 
 /**
  *
@@ -21,20 +20,31 @@ public class MusicaDAO {
         this.conn = conn;
     }
     
+    /*
+    Metodo para buscar artistas no BD, recebe a string filtro que sera a coluna
+    na qual sera feita a busca, e váriavel busca que é o termo a ser procurado.
+    Possui uma sobrecarga para que seja possivel procurar termos do tipo int ou string
+    */
     public ResultSet buscar(String filtro, String busca) throws SQLException {
-        String sql = filtro.equals("artista_id") ?  "select * from musicas where " + filtro + " = ?" : "select * from musicas where lower(" + filtro + ") like lower(?)";
+        String sql = "select * from musicas where lower(" + filtro + ") like lower(?)";
         PreparedStatement statement = conn.prepareStatement(sql);
-        
-        if(filtro.equals("artista_id")){
-            statement.setInt(1, Integer.parseInt(busca));
-        }else{
-            statement.setString(1, busca);
-        }
-        
+        statement.setString(1, busca);
+       
         statement.execute();
         ResultSet resultado = statement.getResultSet();
-        
-        
+
         return resultado;
     }
+    
+    public ResultSet buscar(String filtro, int busca) throws SQLException {
+        String sql = "select * from musicas where " + filtro + " = ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, busca);
+       
+        statement.execute();
+        ResultSet resultado = statement.getResultSet();
+
+        return resultado;
+    }
+     
 }

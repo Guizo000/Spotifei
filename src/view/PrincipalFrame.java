@@ -15,11 +15,12 @@ import javax.swing.JTextField;
  * @author Guilherme Rocha
  */
 public class PrincipalFrame extends javax.swing.JFrame {
-    
     ControllerMusica c;
     
     public PrincipalFrame() {
         initComponents();
+        //Centralizando Tela
+        this.setLocationRelativeTo(null);
         c = new ControllerMusica(this);
     }
 
@@ -90,6 +91,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         txt_busca.setText("Procurar Música");
+        txt_busca.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txt_buscaFocusGained(evt);
+            }
+        });
 
         lbl_filtro.setText("Procurar por:");
 
@@ -111,15 +117,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         tb_busca.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Titulo", "Duração", "Gênero", "Lançamento", "Artista"
             }
         ));
+        tb_busca.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tb_busca);
 
         sp_busca.setViewportView(jScrollPane2);
@@ -131,7 +135,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGroup(panel_homeLayout.createSequentialGroup()
                 .addGroup(panel_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_homeLayout.createSequentialGroup()
-                        .addGap(128, 128, 128)
+                        .addGap(43, 43, 43)
+                        .addComponent(sp_busca, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panel_homeLayout.createSequentialGroup()
+                        .addGap(228, 228, 228)
                         .addGroup(panel_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panel_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(panel_homeLayout.createSequentialGroup()
@@ -147,16 +154,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
                                     .addComponent(rb_busca_genero)))
                             .addGroup(panel_homeLayout.createSequentialGroup()
                                 .addGap(58, 58, 58)
-                                .addComponent(lbl_filtro))))
-                    .addGroup(panel_homeLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(sp_busca, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+                                .addComponent(lbl_filtro)))))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         panel_homeLayout.setVerticalGroup(
             panel_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_homeLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(31, 31, 31)
                 .addGroup(panel_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_busca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bt_busca))
@@ -167,9 +171,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(rb_busca_titulo)
                     .addComponent(rb_busca_artista)
                     .addComponent(rb_busca_genero))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addComponent(sp_busca, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27))
+                .addGap(31, 31, 31))
         );
 
         panel_historico.addTab("Home", panel_home);
@@ -178,7 +182,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         panel_playlist.setLayout(panel_playlistLayout);
         panel_playlistLayout.setHorizontalGroup(
             panel_playlistLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 450, Short.MAX_VALUE)
+            .addGap(0, 652, Short.MAX_VALUE)
         );
         panel_playlistLayout.setVerticalGroup(
             panel_playlistLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,7 +195,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 450, Short.MAX_VALUE)
+            .addGap(0, 652, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,7 +212,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel_historico)
+            .addComponent(panel_historico, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
@@ -217,6 +221,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void bt_buscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_buscaActionPerformed
         c.buscarMusica();
     }//GEN-LAST:event_bt_buscaActionPerformed
+    
+    //Deixa a caixa de texto para procurar musicas vazia ao clicar nela
+    private void txt_buscaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_buscaFocusGained
+        txt_busca.setText("");
+    }//GEN-LAST:event_txt_buscaFocusGained
 
 //    /**
 //     * @param args the command line arguments

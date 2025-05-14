@@ -13,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Conexao {
+    //Conexão com o banco de dados
     public Connection getConnection() throws SQLException{
         Connection conexao = DriverManager.getConnection(
                 "jdbc:postgresql://localhost:5432/spotifei",
