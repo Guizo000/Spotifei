@@ -21,6 +21,7 @@ public class UsuarioDAO {
         this.conn = conn;
     }
     
+    //Metodo para inserir usuarios no bs
     public void inserir(Usuario usuario) throws SQLException{
         String sql = "insert into usuarios (nome, login, senha) values ('"
                       + usuario.getNome()    + "', '"
@@ -31,6 +32,7 @@ public class UsuarioDAO {
         conn.close();
     }
     
+    //Metodo para retornar um usuario especifico do bd
     public ResultSet consultar(Usuario usuario) throws SQLException{
         String sql = "select * from usuarios where login = ? and senha = ?";
         PreparedStatement statement = conn.prepareStatement(sql);

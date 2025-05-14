@@ -29,16 +29,16 @@ public class ControllerCadastro {
         String login = view.getTxt_login_cadastro().getText();
         String senha = view.getTxt_senha_cadastro().getText();
         
-        //Verificação para evitar que os campos estejam vazios
-        if (view.getTxt_nome_cadastro().getText() == null || view.getTxt_nome_cadastro().getText().trim().isEmpty()){
+        //Verificação para evitar que os campos (nome, senha e login) estejam vazios
+        if (nome == null || nome.trim().isEmpty()){
             throw new IllegalArgumentException("Nome não pode ser vazio");
         }
     
-        if (view.getTxt_login_cadastro().getText() == null || view.getTxt_login_cadastro().getText().trim().isEmpty()){
+        if (login == null || login.trim().isEmpty()){
             throw new IllegalArgumentException("Login não pode ser vazio");
         }
         
-        if (view.getTxt_senha_cadastro().getText() == null || view.getTxt_senha_cadastro().getText().trim().isEmpty()){
+        if (senha == null || senha.trim().isEmpty()){
             throw new IllegalArgumentException("Senha não pode ser vazio");
         }
         
@@ -58,6 +58,7 @@ public class ControllerCadastro {
            
         } catch (SQLException ex) {
             switch(ex.getSQLState()){
+                //ERROR 23505 representa o erro no bd ao tentar inserir um valor ja existente em uma coluna marcada como UNIQUE
                 case "23505" -> JOptionPane.showMessageDialog(view, "Este login está indisponível","Erro", JOptionPane.ERROR_MESSAGE);
                 default -> JOptionPane.showMessageDialog(view, "Erro de conexão!","Erro", JOptionPane.ERROR_MESSAGE);
             }         
