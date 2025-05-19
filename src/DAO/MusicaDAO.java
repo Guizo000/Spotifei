@@ -26,7 +26,7 @@ public class MusicaDAO {
     Possui uma sobrecarga para que seja possivel procurar termos do tipo int ou string
     */
     public ResultSet buscar(String filtro, String busca) throws SQLException {
-        String sql = "select * from musicas where lower(" + filtro + ") like lower(?)";
+        String sql = "select * from musicas where lower(" + filtro + ") like lower(?) order by artista_id";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, busca);
        
@@ -37,7 +37,7 @@ public class MusicaDAO {
     }
     
     public ResultSet buscar(String filtro, int busca) throws SQLException {
-        String sql = "select * from musicas where " + filtro + " = ?";
+        String sql = "select * from musicas where " + filtro + " = ? order by artista_id";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, busca);
        

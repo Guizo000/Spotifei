@@ -5,7 +5,6 @@
 package view;
 
 import controller.ControllerMusicaDialog;
-import javax.swing.JOptionPane;
 import model.Musica;
 
 /**
@@ -113,15 +112,17 @@ public class MusicaDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
     
     private void bt_curtirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_curtirActionPerformed
-        String acaoPrevia = c.verificarAvaliacaoDeMusica(musica);
-        c.avaliarMusica(musica, "curtida", acaoPrevia);  
-        lbl_avaliacao.setText("Avaliação do usuário: " + c.verificarAvaliacaoDeMusica(musica));
+       /*A variável avaliacaoFinal guarda a string que representa o estado final da avaliação da musica
+          apos o usuario cliacar em curtir ou descurtir*/
+        String avaliacaoFinal = c.avaliarMusica(musica, "curtida", lbl_avaliacao.getText().substring(22));  
+        lbl_avaliacao.setText("Avaliação do usuário: " + avaliacaoFinal);
     }//GEN-LAST:event_bt_curtirActionPerformed
 
     private void bt_descurtirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_descurtirActionPerformed
-        String acaoPrevia = c.verificarAvaliacaoDeMusica(musica);
-        c.avaliarMusica(musica, "descurtida", acaoPrevia);
-        lbl_avaliacao.setText("Avaliação do usuário: " + c.verificarAvaliacaoDeMusica(musica));
+        /*A variável avaliacaoFinal guarda a string que representa o estado final da avaliação da musica
+          apos o usuario cliacar em curtir ou descurtir*/
+        String avaliacaoFinal = c.avaliarMusica(musica, "descurtida", lbl_avaliacao.getText().substring(22));
+        lbl_avaliacao.setText("Avaliação do usuário: " + avaliacaoFinal);
     }//GEN-LAST:event_bt_descurtirActionPerformed
 
 

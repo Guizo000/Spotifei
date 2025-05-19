@@ -21,6 +21,7 @@ public class AvaliacaoDAO {
         this.conn = conn;
     }
     
+    //Adiciona uma avaliação na tabela
     public void registrarAvaliacao(Musica musica, String acao) throws SQLException{
         String sql = "insert into usuario_musica_curtidas (usuario_id, musica_id, acao) values ('"
                       + SessaoUsuario.getUsuarioLogado().getId() + "', '"
@@ -32,6 +33,7 @@ public class AvaliacaoDAO {
         conn.close();
     }
     
+    //Remove uma avaliação da tabela
     public void removerAvaliacao(Musica musica) throws SQLException{
         String sql = "delete from usuario_musica_curtidas where usuario_id = "
                       + SessaoUsuario.getUsuarioLogado().getId() + " and musica_id = "
@@ -41,6 +43,7 @@ public class AvaliacaoDAO {
         statement.execute();    
     }
     
+    //Verifica se a musica do parâmetro foi avaliada pelo usuario logado e caso tenha sido retorna a avaliação
     public ResultSet verificarAvaliacao(Musica musica) throws SQLException{
         String sql = "select acao from usuario_musica_curtidas where usuario_id = "
                       + SessaoUsuario.getUsuarioLogado().getId() + " and musica_id = "
@@ -52,6 +55,7 @@ public class AvaliacaoDAO {
         return res;
     }
     
+    //Inverte a avaliação da musica, curtida vira descurtida e vice versa
     public void inverterAvaliacao(Musica musica, String acao) throws SQLException{
         String sql = "update usuario_musica_curtidas set acao = '" + acao + "' where usuario_id = "
                       + SessaoUsuario.getUsuarioLogado().getId() + " and musica_id = "

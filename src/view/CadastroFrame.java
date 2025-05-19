@@ -18,9 +18,9 @@ public class CadastroFrame extends javax.swing.JFrame {
     
     public CadastroFrame() {
         initComponents();
-        //Centralizando Tela
-        this.setLocationRelativeTo(null);
         c = new ControllerCadastro(this);
+        //Centralizando Tela
+        this.setLocationRelativeTo(null);  
     }
 
     public JTextField getTxt_login_cadastro() {
@@ -55,8 +55,6 @@ public class CadastroFrame extends javax.swing.JFrame {
         this.txt_senha_cadastro = txt_senha_cadastro;
     }
 
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -70,9 +68,9 @@ public class CadastroFrame extends javax.swing.JFrame {
         txt_login_cadastro = new javax.swing.JTextField();
         txt_senha_cadastro = new javax.swing.JTextField();
         bt_cadastrar = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lbl_nome = new javax.swing.JLabel();
+        lbl_login = new javax.swing.JLabel();
+        lbl_senha = new javax.swing.JLabel();
         lbl_voltar = new javax.swing.JLabel();
         bt_voltar = new javax.swing.JButton();
 
@@ -87,11 +85,11 @@ public class CadastroFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("NOME:");
+        lbl_nome.setText("NOME:");
 
-        jLabel2.setText("LOGIN:");
+        lbl_login.setText("LOGIN:");
 
-        jLabel3.setText("SENHA:");
+        lbl_senha.setText("SENHA:");
 
         lbl_voltar.setText("Ja é cadastrado? faça seu login");
 
@@ -110,12 +108,12 @@ public class CadastroFrame extends javax.swing.JFrame {
                 .addGap(187, 187, 187)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addComponent(lbl_senha)
                         .addGap(6, 6, 6))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
+                            .addComponent(lbl_nome)
+                            .addComponent(lbl_login))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbl_voltar, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -132,15 +130,15 @@ public class CadastroFrame extends javax.swing.JFrame {
                 .addGap(66, 66, 66)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_nome_cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(lbl_nome))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_login_cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(lbl_login))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txt_senha_cadastro, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(lbl_senha))
                 .addGap(37, 37, 37)
                 .addComponent(bt_cadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(41, 41, 41)
@@ -162,52 +160,19 @@ public class CadastroFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_bt_cadastrarActionPerformed
 
     private void bt_voltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_voltarActionPerformed
+        //Volta para a tela de login
         LoginFrame lf = new LoginFrame();
         lf.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_bt_voltarActionPerformed
 
-//    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(CadastroFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(CadastroFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(CadastroFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(CadastroFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new CadastroFrame().setVisible(true);
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_cadastrar;
     private javax.swing.JButton bt_voltar;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel lbl_login;
+    private javax.swing.JLabel lbl_nome;
+    private javax.swing.JLabel lbl_senha;
     private javax.swing.JLabel lbl_voltar;
     private javax.swing.JTextField txt_login_cadastro;
     private javax.swing.JTextField txt_nome_cadastro;

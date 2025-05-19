@@ -24,7 +24,7 @@ public class ControllerMusicaDialog {
         this.view = view;
     }
     
-    public void avaliarMusica(Musica musica, String acao, String acaoPrevia){
+    public String avaliarMusica(Musica musica, String acao, String acaoPrevia){
         Conexao conexao = new Conexao();
         
         try{
@@ -34,31 +34,39 @@ public class ControllerMusicaDialog {
             if(acaoPrevia.equals("nenhuma") && acao.equals("curtida")){
                 dao.registrarAvaliacao(musica, acao);
                 JOptionPane.showMessageDialog(view, "Musica curtida!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+                return "curtida";
                 
             }else if(acaoPrevia.equals("nenhuma") && acao.equals("descurtida")){
                 dao.registrarAvaliacao(musica, acao);
                 JOptionPane.showMessageDialog(view, "Musica descurtida!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+                return "descurtida";
                 
             }else if(acaoPrevia.equals("curtida") && acao.equals("curtida")){
                 dao.removerAvaliacao(musica);
                 JOptionPane.showMessageDialog(view, "Curtida removida!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+                return "nenhuma";
                 
             }else if(acaoPrevia.equals("curtida") && acao.equals("descurtida")){
                 dao.inverterAvaliacao(musica, acao);
                 JOptionPane.showMessageDialog(view, "Musica descurtida!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+                return "descurtida";
                 
             }else if(acaoPrevia.equals("descurtida") && acao.equals("curtida")){
                 dao.inverterAvaliacao(musica, acao);
                 JOptionPane.showMessageDialog(view, "Musica curtida!","Aviso", JOptionPane.INFORMATION_MESSAGE);
+                return "curtida";
                 
             }else if(acaoPrevia.equals("descurtida") && acao.equals("descurtida")){
                 dao.removerAvaliacao(musica);
                 JOptionPane.showMessageDialog(view, "Descurtida removida","Aviso", JOptionPane.INFORMATION_MESSAGE);
-                
+                return "nenhuma"; 
+            }else{
+                return acaoPrevia;
             }
-            
+                    
         }catch (SQLException ex){
             System.out.println(ex);
+            return acaoPrevia;
         }
     }
     

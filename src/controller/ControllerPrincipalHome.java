@@ -22,10 +22,10 @@ import model.Musica;
  *
  * @author Guilherme Rocha
  */
-public class ControllerPrincipal {
+public class ControllerPrincipalHome {
     private PrincipalFrame view;
 
-    public ControllerPrincipal(PrincipalFrame view) {
+    public ControllerPrincipalHome(PrincipalFrame view) {
         this.view = view;
     }
     
@@ -39,19 +39,19 @@ public class ControllerPrincipal {
             ResultSet res;
             ResultSet resArtista;
             
-            if(view.getRb_busca_artista().isSelected()){
+            if(view.getHome_rb_busca_artista().isSelected()){
                 /* Primeiro usa o metodo buscar de ArtistaDAO para retornar
                 o id do artista com base no seu nome, necessario para achar 
                 as musicas do artista, pois a chave estrangeira da tabela artistas
                 em musicas é o artista_id */
-                resArtista = daoArtista.buscar("nome", view.getTxt_busca().getText());
+                resArtista = daoArtista.buscar("nome", view.getHome_txt_busca().getText());
                 /* A ação apos o : serve para que o ResultSet res nunca fique 
                 nulo evitando excessões ao cheagar no while(res.next()) */
                 res = resArtista.next() ? dao.buscar("artista_id", resArtista.getInt("id")) : dao.buscar("artista_id", 0);
-            }else if(view.getRb_busca_genero().isSelected()){
-                res = dao.buscar("genero", view.getTxt_busca().getText());
+            }else if(view.getHome_rb_busca_genero().isSelected()){
+                res = dao.buscar("genero", view.getHome_txt_busca().getText());
             }else{
-                res = dao.buscar("titulo", view.getTxt_busca().getText());    
+                res = dao.buscar("titulo", view.getHome_txt_busca().getText());    
             }
             
             List<Musica> musicas = new ArrayList<>();
@@ -68,7 +68,7 @@ public class ControllerPrincipal {
             }
             
             //Codigo para exibir as musicas encontradas na tabela
-            DefaultTableModel dtm = (DefaultTableModel) view.getTb_busca().getModel();
+            DefaultTableModel dtm = (DefaultTableModel) view.getHome_tb_busca().getModel();
             dtm.setRowCount(0);
             
             for (Musica musica : musicas) {
