@@ -4,24 +4,28 @@
  */
 package view;
 
-import controller.ControllerMusica;
-import javax.swing.ButtonGroup;
+import controller.ControllerPrincipal;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.TableColumnModel;
+import model.Musica;
 
 /**
  *
  * @author Guilherme Rocha
  */
 public class PrincipalFrame extends javax.swing.JFrame {
-    ControllerMusica c;
+    private ControllerPrincipal c;
     
     public PrincipalFrame() {
         initComponents();
         //Centralizando Tela
         this.setLocationRelativeTo(null);
-        c = new ControllerMusica(this);
+        c = new ControllerPrincipal(this);
+        //Escondido a coluna id da tabela de busca de musicas
+        TableColumnModel tcm = tb_busca.getColumnModel();
+        tcm.removeColumn(tcm.getColumn(5));  
     }
 
     public JTable getTb_busca() {
@@ -74,6 +78,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         rbg_busca = new javax.swing.ButtonGroup();
+        jDialog1 = new javax.swing.JDialog();
         panel_historico = new javax.swing.JTabbedPane();
         panel_home = new javax.swing.JPanel();
         txt_busca = new javax.swing.JTextField();
@@ -87,6 +92,20 @@ public class PrincipalFrame extends javax.swing.JFrame {
         tb_busca = new javax.swing.JTable();
         panel_playlist = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
+
+        jDialog1.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jDialog1.setBackground(new java.awt.Color(0, 0, 0));
+
+        javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
+        jDialog1.getContentPane().setLayout(jDialog1Layout);
+        jDialog1Layout.setHorizontalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jDialog1Layout.setVerticalGroup(
+            jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,11 +139,32 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Titulo", "Duração", "Gênero", "Lançamento", "Artista"
+                "Titulo", "Duração", "Gênero", "Lançamento", "Artista", "Musica_Object_Invisivel"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tb_busca.getTableHeader().setReorderingAllowed(false);
+        tb_busca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tb_buscaMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tb_busca);
+        if (tb_busca.getColumnModel().getColumnCount() > 0) {
+            tb_busca.getColumnModel().getColumn(0).setResizable(false);
+            tb_busca.getColumnModel().getColumn(1).setResizable(false);
+            tb_busca.getColumnModel().getColumn(2).setResizable(false);
+            tb_busca.getColumnModel().getColumn(3).setResizable(false);
+            tb_busca.getColumnModel().getColumn(4).setResizable(false);
+            tb_busca.getColumnModel().getColumn(5).setResizable(false);
+        }
 
         sp_busca.setViewportView(jScrollPane2);
 
@@ -218,52 +258,31 @@ public class PrincipalFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tb_buscaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tb_buscaMouseClicked
+        JTable source = (JTable) evt.getSource();
+        int row = source.rowAtPoint( evt.getPoint() );
+        Musica musica = (Musica) source.getModel().getValueAt(row, 5);
+
+        //Abrindo MusicaDialog com a musica clicada sendo passada como argumento
+        MusicaDialog md = new MusicaDialog(this, true, musica);
+        md.setVisible(true);
+    }//GEN-LAST:event_tb_buscaMouseClicked
+
     private void bt_buscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_buscaActionPerformed
         c.buscarMusica();
     }//GEN-LAST:event_bt_buscaActionPerformed
-    
-    //Deixa a caixa de texto para procurar musicas vazia ao clicar nela
+
     private void txt_buscaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_buscaFocusGained
-        txt_busca.setText("");
+        if(txt_busca.getText().equals("Procurar Música")){
+            txt_busca.setText("");
+        }
     }//GEN-LAST:event_txt_buscaFocusGained
 
-//    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(PrincipalFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(PrincipalFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(PrincipalFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(PrincipalFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new PrincipalFrame().setVisible(true);
-//            }
-//        });
-//    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bt_busca;
+    private javax.swing.JDialog jDialog1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lbl_filtro;

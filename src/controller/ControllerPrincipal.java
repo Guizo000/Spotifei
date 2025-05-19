@@ -22,10 +22,10 @@ import model.Musica;
  *
  * @author Guilherme Rocha
  */
-public class ControllerMusica {
+public class ControllerPrincipal {
     private PrincipalFrame view;
 
-    public ControllerMusica(PrincipalFrame view) {
+    public ControllerPrincipal(PrincipalFrame view) {
         this.view = view;
     }
     
@@ -77,7 +77,8 @@ public class ControllerMusica {
                     musica.getDuracaoFormatada(),
                     musica.getGenero(),
                     musica.getDataFormatada(),
-                    musica.getArtista().getNome()
+                    musica.getArtista().getNome(),
+                    musica
                 };
                 dtm.addRow(row);
             }     
