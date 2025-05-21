@@ -36,6 +36,10 @@ public class PrincipalFrame extends javax.swing.JFrame {
         tcm3.removeColumn(tcm3.getColumn(1)); 
     }
 
+    public ControllerPrincipalHistorico getcH() {
+        return cH;
+    }
+
     public JTable getHistorico_tb_historico_buscas() {
         return historico_tb_historico_buscas;
     }
@@ -268,6 +272,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 "Busca", "Filtro"
             }
         ));
+        historico_tb_historico_buscas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                historico_tb_historico_buscasMouseClicked(evt);
+            }
+        });
         sp_historico_musicas.setViewportView(historico_tb_historico_buscas);
 
         historico_tb_musicas_curtidas.setModel(new javax.swing.table.DefaultTableModel(
@@ -286,6 +295,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        historico_tb_musicas_curtidas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                historico_tb_musicas_curtidasMouseClicked(evt);
+            }
+        });
         sp_musicas_curtidas.setViewportView(historico_tb_musicas_curtidas);
         if (historico_tb_musicas_curtidas.getColumnModel().getColumnCount() > 0) {
             historico_tb_musicas_curtidas.getColumnModel().getColumn(0).setResizable(false);
@@ -299,6 +313,11 @@ public class PrincipalFrame extends javax.swing.JFrame {
                 "Música", "Musica_Objetc_Invisivel"
             }
         ));
+        historico_tb_musicas_descurtidas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                historico_tb_musicas_descurtidasMouseClicked(evt);
+            }
+        });
         sp_musicas_descurtidas.setViewportView(historico_tb_musicas_descurtidas);
 
         historico_lbl_historico_buscas.setText("Histórico de Buscas (Últimas 10):");
@@ -318,13 +337,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addComponent(historico_lbl_historico_buscas))
                 .addGap(40, 40, 40)
                 .addGroup(panel_historicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(sp_musicas_descurtidas, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(historico_lbl_musicas_curtidas))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                .addGroup(panel_historicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(sp_musicas_curtidas, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(historico_lbl_musicas_descurtidas))
-                .addGap(40, 40, 40))
+                    .addComponent(historico_lbl_musicas_curtidas))
+                .addGap(38, 38, 38)
+                .addGroup(panel_historicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(historico_lbl_musicas_descurtidas)
+                    .addComponent(sp_musicas_descurtidas, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         panel_historicoLayout.setVerticalGroup(
             panel_historicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -357,17 +376,20 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //Evento no clique no botão de busca de música
     private void home_bt_buscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_home_bt_buscaActionPerformed
         c.buscarMusica();
     }//GEN-LAST:event_home_bt_buscaActionPerformed
-
+    
+    //Evento de foco ganho na barra de pesquisa
     private void home_txt_buscaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_home_txt_buscaFocusGained
         if(home_txt_busca.getText().equals("Procurar Música")){
             home_txt_busca.setText("");
         }
     }//GEN-LAST:event_home_txt_buscaFocusGained
-
+    
+   //Evento de clique nas musicas da tabela de busca
     private void home_tb_buscaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_home_tb_buscaMouseClicked
         JTable source = (JTable) evt.getSource();
         int row = source.rowAtPoint( evt.getPoint() );
@@ -385,9 +407,55 @@ public class PrincipalFrame extends javax.swing.JFrame {
             cH.exibirHistoricoBuscas();
         }
     }//GEN-LAST:event_tp_principalStateChanged
+    
+    //Evento de clique nas musicas da tabela de musicas descurtidas
+    private void historico_tb_musicas_descurtidasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historico_tb_musicas_descurtidasMouseClicked
+        JTable source = (JTable) evt.getSource();
+        int row = source.rowAtPoint( evt.getPoint() );
+        Musica musica = (Musica) source.getModel().getValueAt(row, 1);
 
+        //Abrindo MusicaDialog com a musica clicada sendo passada como argumento
+        MusicaDialog md = new MusicaDialog(this, true, musica);
+        md.setVisible(true);
+        
+        cH.exibirHistoricoMusicasAvaliadas("curtida");
+        cH.exibirHistoricoMusicasAvaliadas("descurtida");
+    }//GEN-LAST:event_historico_tb_musicas_descurtidasMouseClicked
+
+    //Evento de clique nas musicas da tabela de musicas curtidas
+    private void historico_tb_musicas_curtidasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historico_tb_musicas_curtidasMouseClicked
+        JTable source = (JTable) evt.getSource();
+        int row = source.rowAtPoint( evt.getPoint() );
+        Musica musica = (Musica) source.getModel().getValueAt(row, 1);
+
+        //Abrindo MusicaDialog com a musica clicada sendo passada como argumento
+        MusicaDialog md = new MusicaDialog(this, true, musica);
+        md.setVisible(true);
+        
+        cH.exibirHistoricoMusicasAvaliadas("curtida");
+        cH.exibirHistoricoMusicasAvaliadas("descurtida");
+    }//GEN-LAST:event_historico_tb_musicas_curtidasMouseClicked
+
+    //Evento de clique nas musicas da tabela de historico de musicas buscadas
+    private void historico_tb_historico_buscasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historico_tb_historico_buscasMouseClicked
+        JTable source = (JTable) evt.getSource();
+        int row = source.rowAtPoint( evt.getPoint() );
+        String busca = (String) source.getModel().getValueAt(row, 0);
+        String filtro = (String) source.getModel().getValueAt(row, 1);
+        
+        home_txt_busca.setText(busca);
+        switch(filtro){
+            case "titulo" -> home_rb_busca_titulo.setSelected(true);
+            case "artista" -> home_rb_busca_artista.setSelected(true);
+            case "genero" -> home_rb_busca_genero.setSelected(true);
+        }
+       
+        tp_principal.setSelectedIndex(0);
+        c.buscarMusica();
+    }//GEN-LAST:event_historico_tb_historico_buscasMouseClicked
+    
+    
    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel historico_lbl_historico_buscas;
     private javax.swing.JLabel historico_lbl_musicas_curtidas;

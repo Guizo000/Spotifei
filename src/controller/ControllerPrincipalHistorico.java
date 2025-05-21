@@ -4,8 +4,8 @@
  */
 package controller;
 
-import DAO.ArtistaDAO;
 import view.PrincipalFrame;
+import DAO.ArtistaDAO;
 import DAO.Conexao;
 import DAO.HistoricoDAO;
 import DAO.MusicaDAO;
@@ -52,6 +52,7 @@ public class ControllerPrincipalHistorico {
         }
         
     }
+    
     public void exibirHistoricoMusicasAvaliadas(String acao){
         Conexao conexao = new Conexao();
         try{
