@@ -47,11 +47,11 @@ public class ControllerPrincipalHome {
                 resArtista = daoArtista.buscar("nome", view.getHome_txt_busca().getText());
                 /* A ação apos o : serve para que o ResultSet res nunca fique 
                 nulo evitando excessões ao cheagar no while(res.next()) */
-                res = resArtista.next() ? dao.buscar("artista_id", resArtista.getInt("id")) : dao.buscar("artista_id", 0);
+                res = resArtista.next() ? dao.buscar("artista_id", resArtista.getInt("id"), view.getHome_txt_busca().getText(), true) : dao.buscar("artista_id", 0, view.getHome_txt_busca().getText(), true);
             }else if(view.getHome_rb_busca_genero().isSelected()){
-                res = dao.buscar("genero", view.getHome_txt_busca().getText());
+                res = dao.buscar("genero", view.getHome_txt_busca().getText(), true);
             }else{
-                res = dao.buscar("titulo", view.getHome_txt_busca().getText());    
+                res = dao.buscar("titulo", view.getHome_txt_busca().getText(), true);    
             }
             
             List<Musica> musicas = new ArrayList<>();
@@ -70,7 +70,6 @@ public class ControllerPrincipalHome {
             //Codigo para exibir as musicas encontradas na tabela
             DefaultTableModel dtm = (DefaultTableModel) view.getHome_tb_busca().getModel();
             dtm.setRowCount(0);
-            
             for (Musica musica : musicas) {
                 Object[] row = {
                     musica.getTitulo(),
@@ -84,7 +83,6 @@ public class ControllerPrincipalHome {
             }     
 
         }catch(SQLException ex){
-            System.out.println(ex);
             JOptionPane.showMessageDialog(view, "Erro de conexão!", "Erro", JOptionPane.ERROR_MESSAGE);
         }  
     }

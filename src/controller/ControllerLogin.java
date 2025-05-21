@@ -37,7 +37,6 @@ public class ControllerLogin {
                 //Caso o login de certo, cria um usuario e o torna o usuario da sessao atual 
                 Usuario usuarioAtual = new Usuario(res.getString("nome"), view.getTxt_login_login().getText(), view.getTxt_senha_login().getText());
                 usuarioAtual.setId(res.getInt("id"));
-                System.out.println(res.getInt("id"));
                 SessaoUsuario.setUsuarioLogado(usuarioAtual);
                 //passa para a tela principal
                 PrincipalFrame pf = new PrincipalFrame();

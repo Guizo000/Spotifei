@@ -65,7 +65,7 @@ public class ControllerMusicaDialog {
             }
                     
         }catch (SQLException ex){
-            System.out.println(ex);
+            JOptionPane.showMessageDialog(view, "Erro de conexão!","Erro", JOptionPane.ERROR_MESSAGE);
             return acaoPrevia;
         }
     }
@@ -83,7 +83,7 @@ public class ControllerMusicaDialog {
                 return "nenhuma";
             }
         }catch (SQLException ex){
-            System.out.println(ex);
+            JOptionPane.showMessageDialog(view, "Erro de conexão!","Erro", JOptionPane.ERROR_MESSAGE);;
             return "erro";         
         }
     }
