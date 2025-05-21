@@ -23,11 +23,11 @@ public class UsuarioDAO {
     
     //Metodo para inserir usuarios no bs
     public void inserir(Usuario usuario) throws SQLException{
-        String sql = "insert into usuarios (nome, login, senha) values ('"
-                      + usuario.getNome()    + "', '"
-                      + usuario.getLogin() + "', '"
-                      + usuario.getSenha()   + "')";
+        String sql = "insert into usuarios (nome, login, senha) values (?, ?, ?)";
         PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setString(1, usuario.getNome());
+        statement.setString(2, usuario.getLogin());
+        statement.setString(3, usuario.getSenha());
         statement.execute();
         conn.close();
     }
@@ -40,6 +40,8 @@ public class UsuarioDAO {
         statement.setString(2, usuario.getSenha());
         statement.execute();
         ResultSet resultado = statement.getResultSet();
+        conn.close();
+        
         return resultado;
     }
 }

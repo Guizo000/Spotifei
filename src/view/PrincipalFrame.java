@@ -4,64 +4,104 @@
  */
 package view;
 
-import controller.ControllerMusica;
-import javax.swing.ButtonGroup;
+import controller.ControllerPrincipalHistorico;
+import controller.ControllerPrincipalHome;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.TableColumnModel;
+import model.Musica;
 
 /**
  *
  * @author Guilherme Rocha
  */
 public class PrincipalFrame extends javax.swing.JFrame {
-    ControllerMusica c;
+    private ControllerPrincipalHome c;
+    private ControllerPrincipalHistorico cH;
     
     public PrincipalFrame() {
         initComponents();
         //Centralizando Tela
         this.setLocationRelativeTo(null);
-        c = new ControllerMusica(this);
+        c = new ControllerPrincipalHome(this);
+        cH = new ControllerPrincipalHistorico(this);
+        //Escondendo a coluna com o objeto musica da tabela de busca de musicas
+        TableColumnModel tcm = home_tb_busca.getColumnModel();
+        tcm.removeColumn(tcm.getColumn(5));  
+        //Escondendo a coluna com o objeto musica das tabelas de busca de musicas curtidas e descurtidas
+        TableColumnModel tcm2 = historico_tb_musicas_curtidas.getColumnModel();
+        tcm2.removeColumn(tcm2.getColumn(1));  
+        TableColumnModel tcm3 = historico_tb_musicas_descurtidas.getColumnModel();
+        tcm3.removeColumn(tcm3.getColumn(1)); 
     }
 
-    public JTable getTb_busca() {
-        return tb_busca;
+    public ControllerPrincipalHistorico getcH() {
+        return cH;
     }
 
-    public void setTb_busca(JTable tb_busca) {
-        this.tb_busca = tb_busca;
+    public JTable getHistorico_tb_historico_buscas() {
+        return historico_tb_historico_buscas;
     }
 
-    public JRadioButton getRb_busca_artista() {
-        return rb_busca_artista;
+    public void setHistorico_tb_historico_buscas(JTable historico_tb_historico_buscas) {
+        this.historico_tb_historico_buscas = historico_tb_historico_buscas;
     }
 
-    public void setRb_busca_artista(JRadioButton rb_busca_artista) {
-        this.rb_busca_artista = rb_busca_artista;
+    public JTable getHistorico_tb_musicas_curtidas() {
+        return historico_tb_musicas_curtidas;
     }
 
-    public JRadioButton getRb_busca_genero() {
-        return rb_busca_genero;
+    public void setHistorico_tb_musicas_curtidas(JTable historico_tb_musicas_curtidas) {
+        this.historico_tb_musicas_curtidas = historico_tb_musicas_curtidas;
     }
 
-    public void setRb_busca_genero(JRadioButton rb_busca_genero) {
-        this.rb_busca_genero = rb_busca_genero;
+    public JTable getHistorico_tb_musicas_descurtidas() {
+        return historico_tb_musicas_descurtidas;
     }
 
-    public JRadioButton getRb_busca_titulo() {
-        return rb_busca_titulo;
+    public void setHistorico_tb_musicas_descurtidas(JTable historico_tb_musicas_descurtidas) {
+        this.historico_tb_musicas_descurtidas = historico_tb_musicas_descurtidas;
+    }
+    
+    public JTable getHome_tb_busca() {
+        return home_tb_busca;
     }
 
-    public void setRb_busca_titulo(JRadioButton rb_busca_titulo) {
-        this.rb_busca_titulo = rb_busca_titulo;
+    public void setHome_tb_busca(JTable tb_busca) {
+        this.home_tb_busca = tb_busca;
     }
 
-    public JTextField getTxt_busca() {
-        return txt_busca;
+    public JRadioButton getHome_rb_busca_artista() {
+        return home_rb_busca_artista;
     }
 
-    public void setTxt_busca(JTextField txt_busca) {
-        this.txt_busca = txt_busca;
+    public void setHome_rb_busca_artista(JRadioButton rb_busca_artista) {
+        this.home_rb_busca_artista = rb_busca_artista;
+    }
+
+    public JRadioButton getHome_rb_busca_genero() {
+        return home_rb_busca_genero;
+    }
+
+    public void setHome_rb_busca_genero(JRadioButton rb_busca_genero) {
+        this.home_rb_busca_genero = rb_busca_genero;
+    }
+
+    public JRadioButton getHome_rb_busca_titulo() {
+        return home_rb_busca_titulo;
+    }
+
+    public void setHome_rb_busca_titulo(JRadioButton rb_busca_titulo) {
+        this.home_rb_busca_titulo = rb_busca_titulo;
+    }
+
+    public JTextField getHome_txt_busca() {
+        return home_txt_busca;
+    }
+
+    public void setHome_txt_busca(JTextField txt_busca) {
+        this.home_txt_busca = txt_busca;
     }
 
     /**
@@ -73,60 +113,93 @@ public class PrincipalFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        rbg_busca = new javax.swing.ButtonGroup();
-        panel_historico = new javax.swing.JTabbedPane();
+        home_rbg_busca = new javax.swing.ButtonGroup();
+        tp_principal = new javax.swing.JTabbedPane();
         panel_home = new javax.swing.JPanel();
-        txt_busca = new javax.swing.JTextField();
-        lbl_filtro = new javax.swing.JLabel();
-        rb_busca_titulo = new javax.swing.JRadioButton();
-        rb_busca_artista = new javax.swing.JRadioButton();
-        rb_busca_genero = new javax.swing.JRadioButton();
-        bt_busca = new javax.swing.JButton();
-        sp_busca = new javax.swing.JScrollPane();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tb_busca = new javax.swing.JTable();
+        home_txt_busca = new javax.swing.JTextField();
+        home_lbl_filtro = new javax.swing.JLabel();
+        home_rb_busca_titulo = new javax.swing.JRadioButton();
+        home_rb_busca_artista = new javax.swing.JRadioButton();
+        home_rb_busca_genero = new javax.swing.JRadioButton();
+        home_bt_busca = new javax.swing.JButton();
+        home_sp_busca = new javax.swing.JScrollPane();
+        home_tb_busca = new javax.swing.JTable();
         panel_playlist = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
+        panel_historico = new javax.swing.JPanel();
+        sp_historico_musicas = new javax.swing.JScrollPane();
+        historico_tb_historico_buscas = new javax.swing.JTable();
+        sp_musicas_curtidas = new javax.swing.JScrollPane();
+        historico_tb_musicas_curtidas = new javax.swing.JTable();
+        sp_musicas_descurtidas = new javax.swing.JScrollPane();
+        historico_tb_musicas_descurtidas = new javax.swing.JTable();
+        historico_lbl_historico_buscas = new javax.swing.JLabel();
+        historico_lbl_musicas_curtidas = new javax.swing.JLabel();
+        historico_lbl_musicas_descurtidas = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        txt_busca.setText("Procurar Música");
-        txt_busca.addFocusListener(new java.awt.event.FocusAdapter() {
+        tp_principal.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tp_principalStateChanged(evt);
+            }
+        });
+
+        home_txt_busca.setText("Procurar Música");
+        home_txt_busca.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txt_buscaFocusGained(evt);
+                home_txt_buscaFocusGained(evt);
             }
         });
 
-        lbl_filtro.setText("Procurar por:");
+        home_lbl_filtro.setText("Procurar por:");
 
-        rbg_busca.add(rb_busca_titulo);
-        rb_busca_titulo.setText("Titulo");
+        home_rbg_busca.add(home_rb_busca_titulo);
+        home_rb_busca_titulo.setText("Titulo");
 
-        rbg_busca.add(rb_busca_artista);
-        rb_busca_artista.setText("Artista");
+        home_rbg_busca.add(home_rb_busca_artista);
+        home_rb_busca_artista.setText("Artista");
 
-        rbg_busca.add(rb_busca_genero);
-        rb_busca_genero.setText("Gênero");
+        home_rbg_busca.add(home_rb_busca_genero);
+        home_rb_busca_genero.setText("Gênero");
 
-        bt_busca.setText("P");
-        bt_busca.addActionListener(new java.awt.event.ActionListener() {
+        home_bt_busca.setText("P");
+        home_bt_busca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bt_buscaActionPerformed(evt);
+                home_bt_buscaActionPerformed(evt);
             }
         });
 
-        tb_busca.setModel(new javax.swing.table.DefaultTableModel(
+        home_tb_busca.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Titulo", "Duração", "Gênero", "Lançamento", "Artista"
+                "Titulo", "Duração", "Gênero", "Lançamento", "Artista", "Musica_Object_Invisivel"
             }
-        ));
-        tb_busca.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(tb_busca);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
 
-        sp_busca.setViewportView(jScrollPane2);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        home_tb_busca.getTableHeader().setReorderingAllowed(false);
+        home_tb_busca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                home_tb_buscaMouseClicked(evt);
+            }
+        });
+        home_sp_busca.setViewportView(home_tb_busca);
+        if (home_tb_busca.getColumnModel().getColumnCount() > 0) {
+            home_tb_busca.getColumnModel().getColumn(0).setResizable(false);
+            home_tb_busca.getColumnModel().getColumn(1).setResizable(false);
+            home_tb_busca.getColumnModel().getColumn(2).setResizable(false);
+            home_tb_busca.getColumnModel().getColumn(3).setResizable(false);
+            home_tb_busca.getColumnModel().getColumn(4).setResizable(false);
+            home_tb_busca.getColumnModel().getColumn(5).setResizable(false);
+        }
 
         javax.swing.GroupLayout panel_homeLayout = new javax.swing.GroupLayout(panel_home);
         panel_home.setLayout(panel_homeLayout);
@@ -135,48 +208,48 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGroup(panel_homeLayout.createSequentialGroup()
                 .addGroup(panel_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel_homeLayout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(sp_busca, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panel_homeLayout.createSequentialGroup()
                         .addGap(228, 228, 228)
                         .addGroup(panel_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panel_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(panel_homeLayout.createSequentialGroup()
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_busca, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(home_txt_busca, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(bt_busca))
+                                    .addComponent(home_bt_busca))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_homeLayout.createSequentialGroup()
-                                    .addComponent(rb_busca_titulo)
+                                    .addComponent(home_rb_busca_titulo)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(rb_busca_artista)
+                                    .addComponent(home_rb_busca_artista)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(rb_busca_genero)))
+                                    .addComponent(home_rb_busca_genero)))
                             .addGroup(panel_homeLayout.createSequentialGroup()
                                 .addGap(58, 58, 58)
-                                .addComponent(lbl_filtro)))))
-                .addContainerGap(48, Short.MAX_VALUE))
+                                .addComponent(home_lbl_filtro))))
+                    .addGroup(panel_homeLayout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(home_sp_busca, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         panel_homeLayout.setVerticalGroup(
             panel_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_homeLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(panel_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_busca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bt_busca))
+                    .addComponent(home_txt_busca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(home_bt_busca))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbl_filtro)
+                .addComponent(home_lbl_filtro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panel_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rb_busca_titulo)
-                    .addComponent(rb_busca_artista)
-                    .addComponent(rb_busca_genero))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
-                .addComponent(sp_busca, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31))
+                    .addComponent(home_rb_busca_titulo)
+                    .addComponent(home_rb_busca_artista)
+                    .addComponent(home_rb_busca_genero))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                .addComponent(home_sp_busca, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
         );
 
-        panel_historico.addTab("Home", panel_home);
+        tp_principal.addTab("Home", panel_home);
 
         javax.swing.GroupLayout panel_playlistLayout = new javax.swing.GroupLayout(panel_playlist);
         panel_playlist.setLayout(panel_playlistLayout);
@@ -189,94 +262,223 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGap(0, 415, Short.MAX_VALUE)
         );
 
-        panel_historico.addTab("Playlists", panel_playlist);
+        tp_principal.addTab("Playlists", panel_playlist);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 652, Short.MAX_VALUE)
+        historico_tb_historico_buscas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Busca", "Filtro"
+            }
+        ));
+        historico_tb_historico_buscas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                historico_tb_historico_buscasMouseClicked(evt);
+            }
+        });
+        sp_historico_musicas.setViewportView(historico_tb_historico_buscas);
+
+        historico_tb_musicas_curtidas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Música", "Musica_Objetc_Invisivel"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        historico_tb_musicas_curtidas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                historico_tb_musicas_curtidasMouseClicked(evt);
+            }
+        });
+        sp_musicas_curtidas.setViewportView(historico_tb_musicas_curtidas);
+        if (historico_tb_musicas_curtidas.getColumnModel().getColumnCount() > 0) {
+            historico_tb_musicas_curtidas.getColumnModel().getColumn(0).setResizable(false);
+        }
+
+        historico_tb_musicas_descurtidas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Música", "Musica_Objetc_Invisivel"
+            }
+        ));
+        historico_tb_musicas_descurtidas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                historico_tb_musicas_descurtidasMouseClicked(evt);
+            }
+        });
+        sp_musicas_descurtidas.setViewportView(historico_tb_musicas_descurtidas);
+
+        historico_lbl_historico_buscas.setText("Histórico de Buscas (Últimas 10):");
+
+        historico_lbl_musicas_curtidas.setText("Músicas Curtidas:");
+
+        historico_lbl_musicas_descurtidas.setText("Músicas Descurtidas:");
+
+        javax.swing.GroupLayout panel_historicoLayout = new javax.swing.GroupLayout(panel_historico);
+        panel_historico.setLayout(panel_historicoLayout);
+        panel_historicoLayout.setHorizontalGroup(
+            panel_historicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_historicoLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(panel_historicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sp_historico_musicas, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(historico_lbl_historico_buscas))
+                .addGap(40, 40, 40)
+                .addGroup(panel_historicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sp_musicas_curtidas, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(historico_lbl_musicas_curtidas))
+                .addGap(38, 38, 38)
+                .addGroup(panel_historicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(historico_lbl_musicas_descurtidas)
+                    .addComponent(sp_musicas_descurtidas, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 415, Short.MAX_VALUE)
+        panel_historicoLayout.setVerticalGroup(
+            panel_historicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_historicoLayout.createSequentialGroup()
+                .addGap(0, 64, Short.MAX_VALUE)
+                .addGroup(panel_historicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(historico_lbl_historico_buscas)
+                    .addComponent(historico_lbl_musicas_curtidas)
+                    .addComponent(historico_lbl_musicas_descurtidas))
+                .addGap(18, 18, 18)
+                .addGroup(panel_historicoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sp_musicas_curtidas, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sp_musicas_descurtidas, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sp_historico_musicas, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40))
         );
 
-        panel_historico.addTab("Historico", jPanel1);
+        tp_principal.addTab("Historico", panel_historico);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel_historico)
+            .addComponent(tp_principal)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panel_historico, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(tp_principal, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void bt_buscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_buscaActionPerformed
-        c.buscarMusica();
-    }//GEN-LAST:event_bt_buscaActionPerformed
     
-    //Deixa a caixa de texto para procurar musicas vazia ao clicar nela
-    private void txt_buscaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_buscaFocusGained
-        txt_busca.setText("");
-    }//GEN-LAST:event_txt_buscaFocusGained
+    //Evento no clique no botão de busca de música
+    private void home_bt_buscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_home_bt_buscaActionPerformed
+        c.buscarMusica();
+    }//GEN-LAST:event_home_bt_buscaActionPerformed
+    
+    //Evento de foco ganho na barra de pesquisa
+    private void home_txt_buscaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_home_txt_buscaFocusGained
+        if(home_txt_busca.getText().equals("Procurar Música")){
+            home_txt_busca.setText("");
+        }
+    }//GEN-LAST:event_home_txt_buscaFocusGained
+    
+   //Evento de clique nas musicas da tabela de busca
+    private void home_tb_buscaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_home_tb_buscaMouseClicked
+        JTable source = (JTable) evt.getSource();
+        int row = source.rowAtPoint( evt.getPoint() );
+        Musica musica = (Musica) source.getModel().getValueAt(row, 5);
 
-//    /**
-//     * @param args the command line arguments
-//     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(PrincipalFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(PrincipalFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(PrincipalFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(PrincipalFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new PrincipalFrame().setVisible(true);
-//            }
-//        });
-//    }
+        //Abrindo MusicaDialog com a musica clicada sendo passada como argumento
+        MusicaDialog md = new MusicaDialog(this, true, musica);
+        md.setVisible(true);
+    }//GEN-LAST:event_home_tb_buscaMouseClicked
 
+    private void tp_principalStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tp_principalStateChanged
+            if(tp_principal.getSelectedIndex() == 2){
+            cH.exibirHistoricoMusicasAvaliadas("curtida");
+            cH.exibirHistoricoMusicasAvaliadas("descurtida");
+            cH.exibirHistoricoBuscas();
+        }
+    }//GEN-LAST:event_tp_principalStateChanged
+    
+    //Evento de clique nas musicas da tabela de musicas descurtidas
+    private void historico_tb_musicas_descurtidasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historico_tb_musicas_descurtidasMouseClicked
+        JTable source = (JTable) evt.getSource();
+        int row = source.rowAtPoint( evt.getPoint() );
+        Musica musica = (Musica) source.getModel().getValueAt(row, 1);
+
+        //Abrindo MusicaDialog com a musica clicada sendo passada como argumento
+        MusicaDialog md = new MusicaDialog(this, true, musica);
+        md.setVisible(true);
+        
+        cH.exibirHistoricoMusicasAvaliadas("curtida");
+        cH.exibirHistoricoMusicasAvaliadas("descurtida");
+    }//GEN-LAST:event_historico_tb_musicas_descurtidasMouseClicked
+
+    //Evento de clique nas musicas da tabela de musicas curtidas
+    private void historico_tb_musicas_curtidasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historico_tb_musicas_curtidasMouseClicked
+        JTable source = (JTable) evt.getSource();
+        int row = source.rowAtPoint( evt.getPoint() );
+        Musica musica = (Musica) source.getModel().getValueAt(row, 1);
+
+        //Abrindo MusicaDialog com a musica clicada sendo passada como argumento
+        MusicaDialog md = new MusicaDialog(this, true, musica);
+        md.setVisible(true);
+        
+        cH.exibirHistoricoMusicasAvaliadas("curtida");
+        cH.exibirHistoricoMusicasAvaliadas("descurtida");
+    }//GEN-LAST:event_historico_tb_musicas_curtidasMouseClicked
+
+    //Evento de clique nas musicas da tabela de historico de musicas buscadas
+    private void historico_tb_historico_buscasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historico_tb_historico_buscasMouseClicked
+        JTable source = (JTable) evt.getSource();
+        int row = source.rowAtPoint( evt.getPoint() );
+        String busca = (String) source.getModel().getValueAt(row, 0);
+        String filtro = (String) source.getModel().getValueAt(row, 1);
+        
+        home_txt_busca.setText(busca);
+        switch(filtro){
+            case "titulo" -> home_rb_busca_titulo.setSelected(true);
+            case "artista" -> home_rb_busca_artista.setSelected(true);
+            case "genero" -> home_rb_busca_genero.setSelected(true);
+        }
+       
+        tp_principal.setSelectedIndex(0);
+        c.buscarMusica();
+    }//GEN-LAST:event_historico_tb_historico_buscasMouseClicked
+    
+    
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bt_busca;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lbl_filtro;
-    private javax.swing.JTabbedPane panel_historico;
+    private javax.swing.JLabel historico_lbl_historico_buscas;
+    private javax.swing.JLabel historico_lbl_musicas_curtidas;
+    private javax.swing.JLabel historico_lbl_musicas_descurtidas;
+    private javax.swing.JTable historico_tb_historico_buscas;
+    private javax.swing.JTable historico_tb_musicas_curtidas;
+    private javax.swing.JTable historico_tb_musicas_descurtidas;
+    private javax.swing.JButton home_bt_busca;
+    private javax.swing.JLabel home_lbl_filtro;
+    private javax.swing.JRadioButton home_rb_busca_artista;
+    private javax.swing.JRadioButton home_rb_busca_genero;
+    private javax.swing.JRadioButton home_rb_busca_titulo;
+    private javax.swing.ButtonGroup home_rbg_busca;
+    private javax.swing.JScrollPane home_sp_busca;
+    private javax.swing.JTable home_tb_busca;
+    private javax.swing.JTextField home_txt_busca;
+    private javax.swing.JPanel panel_historico;
     private javax.swing.JPanel panel_home;
     private javax.swing.JPanel panel_playlist;
-    private javax.swing.JRadioButton rb_busca_artista;
-    private javax.swing.JRadioButton rb_busca_genero;
-    private javax.swing.JRadioButton rb_busca_titulo;
-    private javax.swing.ButtonGroup rbg_busca;
-    private javax.swing.JScrollPane sp_busca;
-    private javax.swing.JTable tb_busca;
-    private javax.swing.JTextField txt_busca;
+    private javax.swing.JScrollPane sp_historico_musicas;
+    private javax.swing.JScrollPane sp_musicas_curtidas;
+    private javax.swing.JScrollPane sp_musicas_descurtidas;
+    private javax.swing.JTabbedPane tp_principal;
     // End of variables declaration//GEN-END:variables
 
 }

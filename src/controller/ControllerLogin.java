@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import model.Usuario;
+import util.SessaoUsuario;
 import view.LoginFrame;
 import view.PrincipalFrame;
 
@@ -33,7 +34,11 @@ public class ControllerLogin {
             UsuarioDAO dao = new UsuarioDAO(conn);
             ResultSet res = dao.consultar(usuario);
             if(res.next()){
-                //Caso o login de certo, passa para a tela principal
+                //Caso o login de certo, cria um usuario e o torna o usuario da sessao atual 
+                Usuario usuarioAtual = new Usuario(res.getString("nome"), view.getTxt_login_login().getText(), view.getTxt_senha_login().getText());
+                usuarioAtual.setId(res.getInt("id"));
+                SessaoUsuario.setUsuarioLogado(usuarioAtual);
+                //passa para a tela principal
                 PrincipalFrame pf = new PrincipalFrame();
                 pf.setVisible(true);
                 view.setVisible(false);
@@ -41,7 +46,6 @@ public class ControllerLogin {
                 JOptionPane.showMessageDialog(view,  "Usuario ou senha não encontrados!", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         } catch(SQLException ex){  
-            System.out.println(ex);
             JOptionPane.showMessageDialog(view, "Erro de conexão!", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }   

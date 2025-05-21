@@ -10,7 +10,16 @@ package model;
  */
 public abstract class Pessoa {
     protected String nome;
+    protected int id;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getNome() {
         return nome;
     }

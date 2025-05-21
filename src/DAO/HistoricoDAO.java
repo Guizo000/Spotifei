@@ -8,37 +8,36 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-public class ArtistaDAO {
+import util.SessaoUsuario;
+/**
+ *
+ * @author Guilherme Rocha
+ */
+public class HistoricoDAO {
     private Connection conn;
-
-    public ArtistaDAO(Connection conn) {
+    
+    public HistoricoDAO(Connection conn){
         this.conn = conn;
     }
     
-    /*
-    Metodo para buscar musicas no BD, recebe a string filtro que sera a coluna
-    na qual sera feita a busca, e váriavel busca que é o termo a ser procurado.
-    Possui uma sobrecarga para que seja possivel procurar artistas pelo id (int) ou nome (String)
-    */
-    public ResultSet buscar(String filtro, String busca) throws SQLException {
-        String sql = "select * from artistas where lower(" + filtro + ") like lower(?)";
+    public ResultSet buscarHistoricoDeBuscas(int qtd) throws SQLException {
+        String sql = "select termo_busca, tipo_busca from historico_buscas where usuario_id = ? order by id desc limit 10";
         PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setString(1, busca);
+        statement.setInt(1, SessaoUsuario.getUsuarioLogado().getId());
         statement.execute();
         ResultSet resultado = statement.getResultSet();
-
+        
         return resultado;
     }
     
-    public ResultSet buscar(String filtro, int busca) throws SQLException {
-        String sql = "select * from artistas where " + filtro + " = ?";
+    public ResultSet buscarMusicasAvaliadas(int qtd, String acao) throws SQLException {
+        String sql = "select musica_id from usuario_musica_curtidas where usuario_id = ? and acao = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setInt(1, busca);       
+        statement.setInt(1, SessaoUsuario.getUsuarioLogado().getId());
+        statement.setString(2, acao);
         statement.execute();
         ResultSet resultado = statement.getResultSet();
-
+        
         return resultado;
     }
-    
 }

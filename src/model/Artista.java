@@ -9,21 +9,12 @@ package model;
  * @author Guilherme Rocha
  */
 public class Artista extends Pessoa{
-    private int id;
     private String genero;
 
     public Artista(int id, String nome, String genero) {
         this.id = id;
         this.nome = nome;
         this.genero = genero;
-    }
-    
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
     
     public String getGenero() {
