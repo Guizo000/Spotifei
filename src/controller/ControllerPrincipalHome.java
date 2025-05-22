@@ -29,7 +29,7 @@ public class ControllerPrincipalHome {
         this.view = view;
     }
     
-    public void buscarMusica(){
+    public List<Musica> buscarMusica(){
         Conexao conexao = new Conexao();
      
         try{
@@ -67,23 +67,10 @@ public class ControllerPrincipalHome {
                 musicas.add(musica);
             }
             
-            //Codigo para exibir as musicas encontradas na tabela
-            DefaultTableModel dtm = (DefaultTableModel) view.getHome_tb_busca().getModel();
-            dtm.setRowCount(0);
-            for (Musica musica : musicas) {
-                Object[] row = {
-                    musica.getTitulo(),
-                    musica.getDuracaoFormatada(),
-                    musica.getGenero(),
-                    musica.getDataFormatada(),
-                    musica.getArtista().getNome(),
-                    musica
-                };
-                dtm.addRow(row);
-            }     
-
+            return musicas;
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(view, "Erro de conexão!", "Erro", JOptionPane.ERROR_MESSAGE);
+            return null;
         }  
     }
 }
