@@ -6,11 +6,19 @@ package view;
 
 import controller.ControllerPrincipalHistorico;
 import controller.ControllerPrincipalHome;
+import controller.ControllerPrincipalPlaylists;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
 import model.Musica;
+import model.Playlist;
+import util.SessaoUsuario;
 
 /**
  *
@@ -19,6 +27,7 @@ import model.Musica;
 public class PrincipalFrame extends javax.swing.JFrame {
     private ControllerPrincipalHome c;
     private ControllerPrincipalHistorico cH;
+    private ControllerPrincipalPlaylists cP;
     
     public PrincipalFrame() {
         initComponents();
@@ -26,6 +35,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         c = new ControllerPrincipalHome(this);
         cH = new ControllerPrincipalHistorico(this);
+        cP = new ControllerPrincipalPlaylists(this);
         //Escondendo a coluna com o objeto musica da tabela de busca de musicas
         TableColumnModel tcm = home_tb_busca.getColumnModel();
         tcm.removeColumn(tcm.getColumn(5));  
@@ -34,6 +44,9 @@ public class PrincipalFrame extends javax.swing.JFrame {
         tcm2.removeColumn(tcm2.getColumn(1));  
         TableColumnModel tcm3 = historico_tb_musicas_descurtidas.getColumnModel();
         tcm3.removeColumn(tcm3.getColumn(1)); 
+       //Escondendo a coluna com o objeto musica da tabela de musicas da playlists
+       TableColumnModel tcm4 = playlists_tb_playlists_musicas.getColumnModel();
+       tcm4.removeColumn(tcm4.getColumn(1));  
     }
 
     public ControllerPrincipalHistorico getcH() {
@@ -125,6 +138,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
         home_sp_busca = new javax.swing.JScrollPane();
         home_tb_busca = new javax.swing.JTable();
         panel_playlist = new javax.swing.JPanel();
+        playlists_sp_playlists = new javax.swing.JScrollPane();
+        playlists_tb_playlists = new javax.swing.JTable();
+        playlists_bt_criar_playlist = new javax.swing.JButton();
+        playlists_sp_playlists_musicas = new javax.swing.JScrollPane();
+        playlists_tb_playlists_musicas = new javax.swing.JTable();
+        playlists_bt_editar_playlist = new javax.swing.JButton();
+        playlists_bt_excluir_playlist = new javax.swing.JButton();
         panel_historico = new javax.swing.JPanel();
         sp_historico_musicas = new javax.swing.JScrollPane();
         historico_tb_historico_buscas = new javax.swing.JTable();
@@ -144,7 +164,7 @@ public class PrincipalFrame extends javax.swing.JFrame {
             }
         });
 
-        home_txt_busca.setText("Procurar Música");
+        home_txt_busca.setText("Procurar Músicas");
         home_txt_busca.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 home_txt_buscaFocusGained(evt);
@@ -210,12 +230,12 @@ public class PrincipalFrame extends javax.swing.JFrame {
                     .addGroup(panel_homeLayout.createSequentialGroup()
                         .addGap(228, 228, 228)
                         .addGroup(panel_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panel_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(panel_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(panel_homeLayout.createSequentialGroup()
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(8, 8, 8)
                                     .addComponent(home_txt_busca, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(home_bt_busca))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(home_bt_busca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panel_homeLayout.createSequentialGroup()
                                     .addComponent(home_rb_busca_titulo)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -235,8 +255,8 @@ public class PrincipalFrame extends javax.swing.JFrame {
             .addGroup(panel_homeLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addGroup(panel_homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(home_txt_busca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(home_bt_busca))
+                    .addComponent(home_bt_busca, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(home_txt_busca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(home_lbl_filtro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -251,15 +271,113 @@ public class PrincipalFrame extends javax.swing.JFrame {
 
         tp_principal.addTab("Home", panel_home);
 
+        playlists_tb_playlists.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Playlists"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        playlists_tb_playlists.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                playlists_tb_playlistsMouseClicked(evt);
+            }
+        });
+        playlists_sp_playlists.setViewportView(playlists_tb_playlists);
+        if (playlists_tb_playlists.getColumnModel().getColumnCount() > 0) {
+            playlists_tb_playlists.getColumnModel().getColumn(0).setResizable(false);
+        }
+
+        playlists_bt_criar_playlist.setText("CRIAR ");
+        playlists_bt_criar_playlist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playlists_bt_criar_playlistActionPerformed(evt);
+            }
+        });
+
+        playlists_tb_playlists_musicas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Músicas", "Musica_Object_Invisivel"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        playlists_tb_playlists_musicas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                playlists_tb_playlists_musicasMouseClicked(evt);
+            }
+        });
+        playlists_sp_playlists_musicas.setViewportView(playlists_tb_playlists_musicas);
+        if (playlists_tb_playlists_musicas.getColumnModel().getColumnCount() > 0) {
+            playlists_tb_playlists_musicas.getColumnModel().getColumn(0).setResizable(false);
+        }
+
+        playlists_bt_editar_playlist.setText("EDITAR ");
+        playlists_bt_editar_playlist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playlists_bt_editar_playlistActionPerformed(evt);
+            }
+        });
+
+        playlists_bt_excluir_playlist.setText("EXCLUIR");
+        playlists_bt_excluir_playlist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playlists_bt_excluir_playlistActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panel_playlistLayout = new javax.swing.GroupLayout(panel_playlist);
         panel_playlist.setLayout(panel_playlistLayout);
         panel_playlistLayout.setHorizontalGroup(
             panel_playlistLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 652, Short.MAX_VALUE)
+            .addGroup(panel_playlistLayout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addGroup(panel_playlistLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(playlists_bt_criar_playlist, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                    .addComponent(playlists_sp_playlists, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(50, 50, 50)
+                .addComponent(playlists_sp_playlists_musicas, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addGroup(panel_playlistLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(playlists_bt_editar_playlist, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(playlists_bt_excluir_playlist, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
         panel_playlistLayout.setVerticalGroup(
             panel_playlistLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 415, Short.MAX_VALUE)
+            .addGroup(panel_playlistLayout.createSequentialGroup()
+                .addContainerGap(42, Short.MAX_VALUE)
+                .addGroup(panel_playlistLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_playlistLayout.createSequentialGroup()
+                        .addComponent(playlists_bt_criar_playlist, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27)
+                        .addGroup(panel_playlistLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(playlists_sp_playlists_musicas, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
+                            .addComponent(playlists_sp_playlists, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(29, 29, 29))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_playlistLayout.createSequentialGroup()
+                        .addComponent(playlists_bt_editar_playlist, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(playlists_bt_excluir_playlist, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(120, 120, 120))))
         );
 
         tp_principal.addTab("Playlists", panel_playlist);
@@ -379,12 +497,26 @@ public class PrincipalFrame extends javax.swing.JFrame {
     
     //Evento no clique no botão de busca de música
     private void home_bt_buscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_home_bt_buscaActionPerformed
-        c.buscarMusica();
+        List<Musica> musicas = c.buscarMusica();
+        //Codigo para exibir as musicas encontradas na tabela
+        DefaultTableModel dtm = (DefaultTableModel) home_tb_busca.getModel();
+        dtm.setRowCount(0);
+        for (Musica musica : musicas) {
+            Object[] row = {
+                musica.getTitulo(),
+                musica.getDuracaoFormatada(),
+                musica.getGenero(),
+                musica.getDataFormatada(),
+                musica.getArtista().getNome(),
+                musica
+            };
+            dtm.addRow(row);
+        }     
     }//GEN-LAST:event_home_bt_buscaActionPerformed
     
     //Evento de foco ganho na barra de pesquisa
     private void home_txt_buscaFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_home_txt_buscaFocusGained
-        if(home_txt_busca.getText().equals("Procurar Música")){
+        if(home_txt_busca.getText().equals("Procurar Músicas")){
             home_txt_busca.setText("");
         }
     }//GEN-LAST:event_home_txt_buscaFocusGained
@@ -401,10 +533,25 @@ public class PrincipalFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_home_tb_buscaMouseClicked
 
     private void tp_principalStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tp_principalStateChanged
-            if(tp_principal.getSelectedIndex() == 2){
+        if(tp_principal.getSelectedIndex() == 2){
             cH.exibirHistoricoMusicasAvaliadas("curtida");
             cH.exibirHistoricoMusicasAvaliadas("descurtida");
             cH.exibirHistoricoBuscas();
+        }
+        
+        if(tp_principal.getSelectedIndex() == 1){
+            DefaultTableModel dtm3 = (DefaultTableModel) playlists_tb_playlists_musicas.getModel();
+            dtm3.setRowCount(0);
+            List<Playlist> playlists = SessaoUsuario.getUsuarioLogado().getPlaylists();
+            System.out.println("Tamanho Playlist ao entrar na aba: " + playlists.size());
+            DefaultTableModel dtm = (DefaultTableModel) playlists_tb_playlists.getModel();
+            dtm.setRowCount(0);
+            for (Playlist playlist : playlists) {
+                Object[] row = {
+                    playlist.getNome()
+                };
+                dtm.addRow(row);
+            }     
         }
     }//GEN-LAST:event_tp_principalStateChanged
     
@@ -453,6 +600,120 @@ public class PrincipalFrame extends javax.swing.JFrame {
         tp_principal.setSelectedIndex(0);
         c.buscarMusica();
     }//GEN-LAST:event_historico_tb_historico_buscasMouseClicked
+
+    private void playlists_bt_criar_playlistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playlists_bt_criar_playlistActionPerformed
+        PlaylistCriacaoDialog pcd = new PlaylistCriacaoDialog(this, true);
+        pcd.setVisible(true);
+        
+        if(!pcd.isSucesso()){
+            return;
+        }
+        
+        String playlistNome = pcd.getTxt_playlist_nome().getText();
+        DefaultTableModel dtm = (DefaultTableModel) playlists_tb_playlists.getModel();
+        Object[] row = {
+            playlistNome
+        };
+        dtm.addRow(row);   
+        
+        PlaylistEdicaoMusicaDialog pamd = new PlaylistEdicaoMusicaDialog(this, true, playlistNome, null, true);
+        pamd.setVisible(true);
+        
+        DefaultTableModel dtm3 = (DefaultTableModel) playlists_tb_playlists_musicas.getModel();
+        TableModel tm = pamd.getTb_musicas_adicionadas().getModel();
+        dtm3.setRowCount(0);
+        for (int i = 0; i < tm.getRowCount(); i++) {
+            Object[] rowToAdd = {
+                tm.getValueAt(i, 0),
+                tm.getValueAt(i, 2)
+            };
+            dtm3.addRow(rowToAdd);
+        }  
+        
+        DefaultTableModel model = (DefaultTableModel) playlists_tb_playlists.getModel();
+        playlists_tb_playlists.setRowSelectionInterval(model.getRowCount() - 1, model.getRowCount() - 1);
+    }//GEN-LAST:event_playlists_bt_criar_playlistActionPerformed
+
+    private void playlists_tb_playlistsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playlists_tb_playlistsMouseClicked
+        JTable source = (JTable) evt.getSource();
+        int row = source.rowAtPoint( evt.getPoint() );
+        String nomePlaylist = (String) source.getModel().getValueAt(row, 0);
+        
+        List<Musica> musicas = cP.buscarMusicasPlaylist(nomePlaylist);
+        DefaultTableModel dtm = (DefaultTableModel) playlists_tb_playlists_musicas.getModel();
+        dtm.setRowCount(0);
+        for (Musica musica : musicas) {
+            Object[] rowToAdd = {
+                musica.getTitulo(),
+                musica
+            };
+            dtm.addRow(rowToAdd);
+        }    
+    }//GEN-LAST:event_playlists_tb_playlistsMouseClicked
+
+    private void playlists_bt_excluir_playlistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playlists_bt_excluir_playlistActionPerformed
+        int index = playlists_tb_playlists.getSelectedRow();
+        if(index != -1){
+            String playlistNome = (String) playlists_tb_playlists.getModel().getValueAt(index, 0);
+            cP.deletarPlaylist(playlistNome);
+            
+            DefaultTableModel model = (DefaultTableModel) playlists_tb_playlists.getModel();
+            model.removeRow(index);
+            
+            List<Playlist> playlists = SessaoUsuario.getUsuarioLogado().getPlaylists();
+            int i = 0;
+            for(Playlist playlist : playlists){
+                if(playlist.getNome().equals(playlistNome)){
+                    SessaoUsuario.getUsuarioLogado().getPlaylists().remove(index);
+                    break;
+                }
+                i++;
+            }
+            DefaultTableModel dtm = (DefaultTableModel) playlists_tb_playlists_musicas.getModel();
+            dtm.setRowCount(0);
+        }else{
+            JOptionPane.showMessageDialog(this, "Nenhuma playlist selecionada", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_playlists_bt_excluir_playlistActionPerformed
+
+    private void playlists_bt_editar_playlistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playlists_bt_editar_playlistActionPerformed
+        int index = playlists_tb_playlists.getSelectedRow();
+        if(index != -1){
+            String playlistNome = (String) playlists_tb_playlists.getModel().getValueAt(index, 0);
+
+            TableModel tm4 = playlists_tb_playlists_musicas.getModel();
+            List<Musica> musicas = new ArrayList<>();
+            for (int i = 0; i < tm4.getRowCount(); i++) {
+                musicas.add((Musica) tm4.getValueAt(i, 1));
+            }  
+
+            PlaylistEdicaoMusicaDialog pamd = new PlaylistEdicaoMusicaDialog(this, true, playlistNome, musicas, false);
+            pamd.setVisible(true);
+
+            DefaultTableModel dtm3 = (DefaultTableModel) playlists_tb_playlists_musicas.getModel();
+            TableModel tm = pamd.getTb_musicas_adicionadas().getModel();
+            dtm3.setRowCount(0);
+            for (int i = 0; i < tm.getRowCount(); i++) {
+                Object[] rowToAdd = {
+                    tm.getValueAt(i, 0),
+                    tm.getValueAt(i, 2)
+                };
+                dtm3.addRow(rowToAdd);
+            }  
+        }else{
+            JOptionPane.showMessageDialog(this, "Nenhuma playlist selecionada", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_playlists_bt_editar_playlistActionPerformed
+
+    private void playlists_tb_playlists_musicasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_playlists_tb_playlists_musicasMouseClicked
+        JTable source = (JTable) evt.getSource();
+        int row = source.rowAtPoint( evt.getPoint() );
+        Musica musica = (Musica) source.getModel().getValueAt(row, 1);
+
+        //Abrindo MusicaDialog com a musica clicada sendo passada como argumento
+        MusicaDialog md = new MusicaDialog(this, true, musica);
+        md.setVisible(true);
+    }//GEN-LAST:event_playlists_tb_playlists_musicasMouseClicked
     
     
    
@@ -475,6 +736,13 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private javax.swing.JPanel panel_historico;
     private javax.swing.JPanel panel_home;
     private javax.swing.JPanel panel_playlist;
+    private javax.swing.JButton playlists_bt_criar_playlist;
+    private javax.swing.JButton playlists_bt_editar_playlist;
+    private javax.swing.JButton playlists_bt_excluir_playlist;
+    private javax.swing.JScrollPane playlists_sp_playlists;
+    private javax.swing.JScrollPane playlists_sp_playlists_musicas;
+    private javax.swing.JTable playlists_tb_playlists;
+    private javax.swing.JTable playlists_tb_playlists_musicas;
     private javax.swing.JScrollPane sp_historico_musicas;
     private javax.swing.JScrollPane sp_musicas_curtidas;
     private javax.swing.JScrollPane sp_musicas_descurtidas;
